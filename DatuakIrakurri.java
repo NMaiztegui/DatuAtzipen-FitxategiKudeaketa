@@ -1,6 +1,5 @@
 import java.io.FileWriter; // <-- Datuak gordetzeko
 import java.io.File;
-import java.io.FileReader; // <-- Datuak irakurtzeko
 import java.io.IOException;
 import java.util.Scanner;
 import java.io.IOException;
@@ -10,15 +9,17 @@ public class DatuakIrakurri{
     public static Scanner aukera = new Scanner(System.in);
 
     public static void main(String[] args) {
-        String sarrera;
+        String sarrera,aurrera;
         do{
             kontsolaGarbitu();
-            System.out.print("Zer egin nahi duzu? \n");
+            System.out.print(Koloreak.CYAN+"Zer egin nahi duzu? \n"+Koloreak.VERDE);
             System.out.println("1- .txt bat kudeatu");
             System.out.println("2- .XML bat kudeatu");
             System.out.println("3- .json bat kudeatu");
             System.out.println("4- Aplikazioa Itxi");
+            System.out.print(Koloreak.CYAN+"Zure aukera: "+Koloreak.AMARILLO);
             sarrera = aukera.nextLine();
+            System.out.print(Koloreak.RESET);
             if(isNumeric(sarrera) == true){
                 switch (sarrera) {
                     case "1":
@@ -26,8 +27,15 @@ public class DatuakIrakurri{
                         String path = ".\\TXT-Datuak.txt";
                         String pathCSV = "./TXT-CSV-Datuak.csv";
                         // TXT IRAKURTZEKO METODOA
+
                         txtIrakurri(path);
+                        System.out.print(Koloreak.ROJO+"Sartu edozer aurrera jarraitzeko: " + Koloreak.AMARILLO);
+                        aurrera = aukera.nextLine();
+                        System.out.print(Koloreak.RESET);
                         txtIdatziCSV(path,pathCSV);
+                        System.out.print(Koloreak.ROJO+"Sartu edozer hasierako menura itzultzeko: "+ Koloreak.AMARILLO);
+                        aurrera = aukera.nextLine();
+                        System.out.print(Koloreak.RESET);
                         break;
                     case "2":
                         kontsolaGarbitu();
