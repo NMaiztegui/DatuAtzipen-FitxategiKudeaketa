@@ -12,8 +12,7 @@ public class DatuakIrakurri{
     public static void main(String[] args) {
         String sarrera;
         do{
-            System.out.print("\033[H\033[2J");
-            System.out.flush();
+            kontsolaGarbitu();
             System.out.print("Zer egin nahi duzu? \n");
             System.out.println("1- .txt bat kudeatu");
             System.out.println("2- .XML bat kudeatu");
@@ -23,30 +22,75 @@ public class DatuakIrakurri{
             if(isNumeric(sarrera) == true){
                 switch (sarrera) {
                     case "1":
-                        System.out.print("\033[H\033[2J");
-                        System.out.flush();
-                        String path = ".\\TXT-Datuak.txt"; 
-                        txtIrakurri(path);
+                        kontsolaGarbitu();
+                        String path = ".\\TXT-Datuak.txt";
+                        String pathCSV = "./TXT-CSV-Datuak.csv";
                         // TXT IRAKURTZEKO METODOA
+                        txtIrakurri(path);
+                        txtIdatziCSV(path,pathCSV);
                         break;
                     case "2":
-                        System.out.print("\033[H\033[2J");
-                        System.out.flush();
+                        kontsolaGarbitu();
                         // XML IRAKURTZEKO METODOA
                     case "3":
-                        System.out.print("\033[H\033[2J");
-                        System.out.flush();
+                        kontsolaGarbitu();
                         // JSON IRAKURTZEKO METODOA
                     case "4":
                         System.out.print("Aplikazioatik urtetan.");
-                        // Aplikazioa itxi
+                        System.exit(0); // Esto cierra el programa inmediatamente
+
                     default:
+                        System.out.println("Sartutako aukera ez da existitzen.\n\t1etik 4rako zenbaki bat sartu behar duzu.");
                         break;
                 }
             }else{
                 System.out.println("Zenbaki bat sartu behar duzu formatuan!" );
             }
         }while( !sarrera.equals("4"));
+    }
+
+    public static  void txtIrakurri(String path){
+        try{
+            File txtFiles = new File(path);
+            // scanner bitartez fitxategia irakurriko da lerroz lerro
+            Scanner lector = new Scanner(txtFiles);
+            while(lector.hasNextLine()){
+                String linea = lector.nextLine();
+                System.out.println(linea);
+            }
+            lector.close();
+
+        }catch (IOException e) {
+            System.out.println("Error al leer el archivo: " + e.getMessage());
+        }
+    }
+
+    public static void txtIdatziCSV(String txtPath,String csvPath){
+        String delimiter = ";"; // Separador en el TXT (tab, espacio, etc.)
+        try (Scanner sc = new Scanner(new File(txtPath));
+            FileWriter fw = new FileWriter(csvPath)) {
+            //   CSV-rako lehen lerroa idatzi, goiburu gisa
+            fw.write("NAN,ADINA\n");
+
+            // TXTko lerro bakoitza irakurri eta CSVan idatzi
+            while (sc.hasNextLine()) {
+                String line = sc.nextLine();
+                String[] campos = line.split(delimiter);
+
+                // Datuak koma bidez bereizi eta idatzi
+                for (int i = 0; i < campos.length; i++) {
+                    fw.write(campos[i]);
+                    if (i < campos.length - 1) {
+                        fw.write(",");
+                    }
+                }
+                fw.write("\n"); // Lerro berria
+            }
+            System.out.println("Fitxategia CSVra bihurtu da goiburuarekin ondo.");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static boolean isNumeric(String cadenaString) {
@@ -60,20 +104,9 @@ public class DatuakIrakurri{
         }
     }
 
-    public static  void txtIrakurri(String path){
-        try{
-             File txtFiles = new File(path);
-            // scanner bitartez fitxategia irakurriko da lerroz lerro
-            Scanner lector = new Scanner(txtFiles);
-            while(lector.hasNextLine()){
-                String linea = lector.nextLine();
-                System.out.println(linea);
-            }
-            lector.close();
-
-        }catch (IOException e) {
-         System.out.println("Error al leer el archivo: " + e.getMessage());
-        }
-       
+    public static void kontsolaGarbitu(){
+        //Kontsola garbitzeko sententziak
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
     }
 }
