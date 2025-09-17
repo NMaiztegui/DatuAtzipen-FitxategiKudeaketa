@@ -11,12 +11,12 @@ public class DatuakIrakurri {
         String sarrera, aurrera;
         do {
             kontsolaGarbitu();
-            System.out.print(Koloreak.CYAN + "Zer egin nahi duzu? \n" + Koloreak.VERDE);
+            System.out.print(Koloreak.Cyan + "Zer egin nahi duzu? \n" + Koloreak.Berdea);
             System.out.println("1- .txt bat kudeatu");
             System.out.println("2- .XML bat kudeatu");
             System.out.println("3- .json bat kudeatu");
             System.out.println("4- Aplikazioa Itxi");
-            System.out.print(Koloreak.CYAN + "Zure aukera: " + Koloreak.AMARILLO);
+            System.out.print(Koloreak.Cyan + "Zure aukera: " + Koloreak.Horia);
             sarrera = aukera.nextLine();
             System.out.print(Koloreak.RESET);
             if (isNumeric(sarrera) == true) {
@@ -34,40 +34,52 @@ public class DatuakIrakurri {
                         // JSON IRAKURTZEKO METODOA
                     case "4":
                         kontsolaGarbitu();
-                        System.out.print(Koloreak.ROJO + "Aplikazioatik urtetan." + Koloreak.RESET);
+                        System.out.print(Koloreak.Gorria + "Aplikazioatik urtetan." + Koloreak.RESET);
                         System.exit(0); // Esto cierra el programa inmediatamente
 
                     default:
-                        System.out.println(
-                                "Sartutako aukera ez da existitzen.\n\t1etik 4rako zenbaki bat sartu behar duzu.");
+                        kontsolaGarbitu();
+                        System.out
+                                .print("Sartutako aukera ez da existitzen.\n1etik 4rako zenbaki bat sartu behar duzu.");
+                        try {
+                            Thread.sleep(3000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                         break;
                 }
             } else {
-                System.out.println("Zenbaki bat sartu behar duzu formatuan!");
+                kontsolaGarbitu();
+                System.out.print(Koloreak.Gorria + "Zenbaki bat sartu behar duzu!" + Koloreak.RESET);
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         } while (!sarrera.equals("4"));
     }
 
-    public static void txtFitxategiakKudeatu(){
+    public static void txtFitxategiakKudeatu() {
         String path = ".\\TXT-Datuak.txt";
         String pathCSV = "./TXT-CSV-Datuak.csv";
         String sarrera, aurrera;
-        do{
+        do {
             kontsolaGarbitu();
-            System.out.print(Koloreak.CYAN + "Zer egin nahi duzu? \n" + Koloreak.VERDE);
+            System.out.print(Koloreak.Cyan + "Zer egin nahi duzu? \n" + Koloreak.Berdea);
             System.out.println("1- Fitxategia Irakurri");
             System.out.println("2- Fitxategia CSV bihurtu");
             System.out.println("3- Menu nagusira itxuli");
-            System.out.print(Koloreak.CYAN + "Zure aukera: " + Koloreak.AMARILLO);
+            System.out.print(Koloreak.Cyan + "Zure aukera: " + Koloreak.Horia);
             sarrera = aukera.nextLine();
             System.out.print(Koloreak.RESET);
-            if(isNumeric(sarrera) == true){
+            if (isNumeric(sarrera) == true) {
                 switch (sarrera) {
                     case "1":
                         kontsolaGarbitu();
                         // TXT IRAKURTZEKO METODOA
                         txtIrakurri(path);
-                        System.out.print(Koloreak.ROJO+"Sartu edozer aurrera jarraitzeko: " + Koloreak.AMARILLO);
+                        System.out.print(Koloreak.Gorria + "Sartu edozer aurrera jarraitzeko: " + Koloreak.Horia);
                         aurrera = aukera.nextLine();
                         System.out.print(Koloreak.RESET);
                         break;
@@ -75,22 +87,42 @@ public class DatuakIrakurri {
                         kontsolaGarbitu();
                         // CSV BIHURTZEKO METODOA
                         txtIdatziCSV(path, pathCSV);
-                        System.out.print(Koloreak.ROJO+"Sartu edozer hasierako menura itzultzeko: "+ Koloreak.AMARILLO);
+                        System.out.print(
+                                Koloreak.Gorria + "Sartu edozer hasierako menura itzultzeko: " + Koloreak.Horia);
                         aurrera = aukera.nextLine();
                         System.out.print(Koloreak.RESET);
                         break;
                     case "3":
-                        System.out.print("Menu nagusira itxultzen.");
-                        main(null); // Esto cierra el programa inmediatamente
+                        System.out.print(Koloreak.Gorria + "Menu nagusira itxultzen." + Koloreak.RESET);
+                        try {
+                            Thread.sleep(2000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        main(new String[0]); // Esto cierra el programa inmediatamente
                         break;
                     default:
-                        System.out.println("Sartutako aukera ez da existitzen.\n\t1etik 4rako zenbaki bat sartu behar duzu.");
+                        kontsolaGarbitu();
+                        System.out.print(Koloreak.Gorria
+                                + "Sartutako aukera ez da existitzen.\n1etik 4rako zenbaki bat sartu behar duzu."
+                                + Koloreak.RESET);
+                        try {
+                            Thread.sleep(3000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                         break;
                 }
-            }else{
-                System.out.println("Zenbaki bat sartu behar duzu formatuan!" );
+            } else {
+                kontsolaGarbitu();
+                System.out.print(Koloreak.Gorria + "Zenbaki bat sartu behar duzu!" + Koloreak.RESET);
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
-        }while(!sarrera.equals("3"));
+        } while (!sarrera.equals("3"));
     }
 
     public static void txtIrakurri(String path) {
