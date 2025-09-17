@@ -85,7 +85,7 @@ public class DatuakIrakurri{
         // Normalizatu dokumentua
         doc.getDocumentElement().normalize();
 
-        System.out.println("Root element: " + doc.getDocumentElement().getNodeName());
+        System.out.println("Datu-Basea: " + doc.getDocumentElement().getNodeName());
 
         // Pertsonen zerrenda hartu
         NodeList nList = doc.getElementsByTagName("pertsona");
