@@ -3,7 +3,16 @@ import java.io.File;
 import java.io.FileReader; // <-- Datuak irakurtzeko
 import java.io.IOException;
 import java.util.Scanner;
-import java.io.IOException;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
 
 
 public class DatuakIrakurri{
@@ -31,13 +40,17 @@ public class DatuakIrakurri{
                         System.out.print("\033[H\033[2J");
                         System.out.flush();
                         // XML IRAKURTZEKO METODOA
+                        xmlGorde();
+                        break;
                     case "3":
                         System.out.print("\033[H\033[2J");
                         System.out.flush();
                         // JSON IRAKURTZEKO METODOA
+                        break;
                     case "4":
                         System.out.print("Aplikazioatik urtetan.");
                         // Aplikazioa itxi
+                        break;
                     default:
                         break;
                 }
@@ -48,13 +61,52 @@ public class DatuakIrakurri{
     }
 
     public static boolean isNumeric(String cadenaString) {
-        String[] cadena = cadenaString.split("/");
+        //String[] cadena = cadenaString.split("/");
         try {
-            Integer.parseInt(cadena[0]);
-            Integer.parseInt(cadena[1]);
+            Integer.parseInt(cadenaString);
+            //Integer.parseInt(cadena[1]);
             return true;
         } catch (NumberFormatException exception) {
             return false;
         }
+    }
+
+    public static void xmlGorde (){
+        // XML gordetzeko metodoa
+        try {
+        // Fitxategia kargatu
+        File fitxategia = new File("Helbidea.xml");
+        
+        // XML parser sortu
+        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+        Document doc = dBuilder.parse(fitxategia);
+
+        // Normalizatu dokumentua
+        doc.getDocumentElement().normalize();
+
+        System.out.println("Root element: " + doc.getDocumentElement().getNodeName());
+
+        // Pertsonen zerrenda hartu
+        NodeList nList = doc.getElementsByTagName("pertsona");
+
+        for (int i = 0; i < nList.getLength(); i++) {
+            Node nodo = nList.item(i);
+
+            if (nodo.getNodeType() == Node.ELEMENT_NODE) {
+                Element element = (Element) nodo;
+
+                String nan = element.getElementsByTagName("NAN").item(0).getTextContent();
+                String helbidea = element.getElementsByTagName("helbidea").item(0).getTextContent();
+
+                System.out.println("------ Pertsona " + (i+1) + " ------");
+                System.out.println("NAN: " + nan);
+                System.out.println("Helbidea: " + helbidea);
+            }
+        }
+
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
     }
 }
