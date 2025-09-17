@@ -25,6 +25,8 @@ public class DatuakIrakurri{
                     case "1":
                         System.out.print("\033[H\033[2J");
                         System.out.flush();
+                        String path = ".\\TXT-Datuak.txt"; 
+                        txtIrakurri(path);
                         // TXT IRAKURTZEKO METODOA
                         break;
                     case "2":
@@ -42,19 +44,36 @@ public class DatuakIrakurri{
                         break;
                 }
             }else{
-                System.out.println("Zenbaki bat sartu behar duzu X/Y formatuan!" );
+                System.out.println("Zenbaki bat sartu behar duzu formatuan!" );
             }
         }while( !sarrera.equals("4"));
     }
 
     public static boolean isNumeric(String cadenaString) {
-        String[] cadena = cadenaString.split("/");
+       // String[] cadena = cadenaString.split("/");
         try {
-            Integer.parseInt(cadena[0]);
-            Integer.parseInt(cadena[1]);
+            Integer.parseInt(cadenaString);
+            //Integer.parseInt(cadena[1]);
             return true;
         } catch (NumberFormatException exception) {
             return false;
         }
+    }
+
+    public static  void txtIrakurri(String path){
+        try{
+             File txtFiles = new File(path);
+            // scanner bitartez fitxategia irakurriko da lerroz lerro
+            Scanner lector = new Scanner(txtFiles);
+            while(lector.hasNextLine()){
+                String linea = lector.nextLine();
+                System.out.println(linea);
+            }
+            lector.close();
+
+        }catch (IOException e) {
+         System.out.println("Error al leer el archivo: " + e.getMessage());
+        }
+       
     }
 }
