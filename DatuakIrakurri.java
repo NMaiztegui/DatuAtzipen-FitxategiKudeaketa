@@ -16,9 +16,8 @@ public class DatuakIrakurri {
             System.out.println("2- .XML bat kudeatu");
             System.out.println("3- .json bat kudeatu");
             System.out.println("4- Aplikazioa Itxi");
-            System.out.print(Koloreak.Cyan + "Zure aukera: " + Koloreak.Horia);
+            System.out.print(Koloreak.Cyan + "Zure aukera: " + Koloreak.RESET);
             sarrera = aukera.nextLine();
-            System.out.print(Koloreak.RESET);
             if (isNumeric(sarrera) == true) {
                 switch (sarrera) {
                     case "1":
@@ -70,27 +69,24 @@ public class DatuakIrakurri {
             System.out.println("1- Fitxategia Irakurri");
             System.out.println("2- Fitxategia CSV bihurtu");
             System.out.println("3- Menu nagusira itxuli");
-            System.out.print(Koloreak.Cyan + "Zure aukera: " + Koloreak.Horia);
+            System.out.print(Koloreak.Cyan + "Zure aukera: " + Koloreak.RESET);
             sarrera = aukera.nextLine();
-            System.out.print(Koloreak.RESET);
             if (isNumeric(sarrera) == true) {
                 switch (sarrera) {
                     case "1":
                         kontsolaGarbitu();
                         // TXT IRAKURTZEKO METODOA
                         txtIrakurri(path);
-                        System.out.print(Koloreak.Gorria + "Sartu edozer aurrera jarraitzeko: " + Koloreak.Horia);
+                        System.out.print(Koloreak.Gorria + "Sartu edozer aurrera jarraitzeko: " + Koloreak.RESET);
                         aurrera = aukera.nextLine();
-                        System.out.print(Koloreak.RESET);
                         break;
                     case "2":
                         kontsolaGarbitu();
                         // CSV BIHURTZEKO METODOA
                         txtIdatziCSV(path, pathCSV);
                         System.out.print(
-                                Koloreak.Gorria + "Sartu edozer hasierako menura itzultzeko: " + Koloreak.Horia);
+                                Koloreak.Gorria + "Sartu edozer hasierako menura itzultzeko: " + Koloreak.RESET);
                         aurrera = aukera.nextLine();
-                        System.out.print(Koloreak.RESET);
                         break;
                     case "3":
                         System.out.print(Koloreak.Gorria + "Menu nagusira itxultzen." + Koloreak.RESET);
