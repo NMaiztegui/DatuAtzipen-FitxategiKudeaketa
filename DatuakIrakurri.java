@@ -1,12 +1,12 @@
-import java.io.FileWriter;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.FileWriter; // <-- Datuak gordetzeko
 import java.io.File;
-import java.util.LinkedHashSet;
-import java.util.Set;
-import java.util.List;
+import java.io.FileReader; // <-- Datuak irakurtzeko
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -15,70 +15,149 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
 
+import java.io.IOException;
+
 public class DatuakIrakurri {
     public static Scanner aukera = new Scanner(System.in);
 
     public static void main(String[] args) {
         String sarrera;
         do {
-            kontsolaGarbitu();
+            System.out.print("\033[H\033[2J");
+            System.out.flush();
             System.out.print("Zer egin nahi duzu? \n");
             System.out.println("1- .txt bat kudeatu");
             System.out.println("2- .XML bat kudeatu");
             System.out.println("3- .json bat kudeatu");
             System.out.println("4- Aplikazioa Itxi");
             sarrera = aukera.nextLine();
-            if (isNumeric(sarrera)) {
+            if (isNumeric(sarrera) == true) {
                 switch (sarrera) {
                     case "1":
-                        kontsolaGarbitu();
+                        System.out.print("\033[H\033[2J");
+                        System.out.flush();
                         // TXT IRAKURTZEKO METODOA
-                        System.out.println("TXT funtzioa oraindik ez dago inplementatuta.");
-                        pausa();
                         break;
                     case "2":
-                        kontsolaGarbitu();
+                        System.out.print("\033[H\033[2J");
+                        System.out.flush();
                         // XML IRAKURTZEKO METODOA
-                        System.out.println("XML funtzioa oraindik ez dago inplementatuta.");
-                        pausa();
-                        break;
                     case "3":
-                        kontsolaGarbitu();
-                        // JSON IRAKURTZEKO ETA CSV-RA IDAZTEKO METODOA
-                        System.out.print("Sartu JSON fitxategiaren bidea (adib. Definir_variables.json): ");
-                        String jsonPath = aukera.nextLine().trim();
-                        if (jsonPath.isEmpty()) jsonPath = "Definir_variables.json";
+                        System.out.print("\033[H\033[2J");
+                        System.out.flush();
+                        // JSON IRAKURTZEKO METODOA
 
-                        System.out.print("Sartu irteerako CSV fitxategiaren bidea (adib. irteera.csv): ");
-                        String csvPath = aukera.nextLine().trim();
-                        if (csvPath.isEmpty()) csvPath = "irteera.csv";
-
-                        try {
-                            jsonToCsv(jsonPath, csvPath);
-                            System.out.println("\n Eginda! CSV sortua hemen: " + new File(csvPath).getAbsolutePath());
-                        } catch (IOException e) {
-                            System.err.println(" Errorea: " + e.getMessage());
-                        }
-                        pausa();
+                        jsonFitxategiakKudeatu();
                         break;
                     case "4":
-                        System.out.print("Aplikaziotik urtetzen.");
-                        break;
+                        System.out.print("Aplikazioatik urtetan.");
+                        // Aplikazioa itxi
                     default:
-                        System.out.println("Aukera okerra. 1etik 4rako zenbaki bat sartu.");
-                        pausaLaburra();
                         break;
                 }
             } else {
-                System.out.println("Zenbaki bat sartu behar duzu!");
-                pausaLaburra();
+                System.out.println("Zenbaki bat sartu behar duzu X/Y formatuan!");
             }
         } while (!sarrera.equals("4"));
     }
 
-    // --- JSON → CSV ---
+    public static boolean isNumeric(String cadenaString) {
+        try {
+            Integer.parseInt(cadenaString);
+            return true;
+        } catch (NumberFormatException exception) {
+            return false;
+        }
+    }
 
-    public static void jsonToCsv(String jsonPath, String csvPath) throws IOException {
+    public static void jsonTxertatu(String path) {
+        String rutaArchivo = "Definir_variables.json";
+
+        try (FileReader reader = new FileReader(rutaArchivo)) {
+            // Parsear el archivo JSON
+            JsonElement jsonElement = JsonParser.parseReader(reader);
+
+            // Imprimir JSON en formato bonito
+            System.out.println(jsonElement.toString());
+        } catch (IOException e) {
+            System.err.println("Error fitxategia irakurtzen: " + e.getMessage());
+        }
+    }
+
+    public static void jsonFitxategiakKudeatu() {
+        String path = ".\\Definir_variables.json";
+        String pathCSV = "./salida.csv";
+        String sarrera, aurrera;
+        do {
+            kontsolaGarbitu();
+            System.out.print("Zer egin nahi duzu? \n");
+            System.out.println("1- Fitxategia Irakurri");
+            System.out.println("2- Fitxategia CSV bihurtu");
+            System.out.println("3- Menu nagusira itxuli");
+            System.out.print("Zure aukera: ");
+            sarrera = aukera.nextLine();
+            if (isNumeric(sarrera) == true) {
+                switch (sarrera) {
+                    case "1":
+                        kontsolaGarbitu();
+                        // TXT IRAKURTZEKO METODOA
+                        jsonTxertatu("Definir_variables.json");
+                        System.out.print("Sartu edozer aurrera jarraitzeko: ");
+                        aurrera = aukera.nextLine();
+                        break;
+                    case "2":
+                        kontsolaGarbitu(); 
+                        System.out.print("Sartu JSON fitxategiaren bidea (adib. Definir_variables.json): "); 
+                        String jsonPath = aukera.nextLine().trim(); if (jsonPath.isEmpty()) 
+                        jsonPath = "Definir_variables.json"; 
+                        System.out.print("Sartu irteerako CSV fitxategiaren bidea (adib. irteera.csv): "); String csvPath = aukera.nextLine().trim(); 
+                        if (csvPath.isEmpty()) csvPath = "irteera.csv";
+                        try { 
+                            jsonToCsv(jsonPath, csvPath); 
+                            System.out.println("\n Eginda! CSV sortua hemen: " + new File(csvPath).getAbsolutePath()); 
+                        } catch (IOException e) { 
+                            System.err.println(" Errorea: " + e.getMessage()); 
+                        }
+                        pausa(); 
+                        break;
+                    case "3":
+                        kontsolaGarbitu();
+                        System.out.print("Menu nagusira itzultzen...");
+                        try {
+                            Thread.sleep(2000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                    default:
+                        kontsolaGarbitu();
+                        System.out.print("Sartutako aukera ez da existitzen.\n1etik 4rako zenbaki bat sartu behar duzu.");
+                        try {
+                            Thread.sleep(3000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                }
+            } else {
+                kontsolaGarbitu();
+                System.out.print("Zenbaki bat sartu behar duzu!");
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        } while (!sarrera.equals("3"));
+    }
+
+    public static void kontsolaGarbitu() {
+        // Kontsola garbitzeko sententziak
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
+    }
+
+        public static void jsonToCsv(String jsonPath, String csvPath) throws IOException {
         JsonElement root;
         try (FileReader reader = new FileReader(jsonPath)) {
             root = JsonParser.parseReader(reader);
@@ -169,38 +248,9 @@ public class DatuakIrakurri {
         return mustQuote ? "\"" + out + "\"" : out;
     }
 
-    // --- Tu helper original para visualizar el JSON (opcional) ---
-    public static void jsonTxertatu(String path) {
-        String rutaArchivo = (path == null || path.isEmpty()) ? "Definir_variables.json" : path;
-        try (FileReader reader = new FileReader(rutaArchivo)) {
-            JsonElement jsonElement = JsonParser.parseReader(reader);
-            System.out.println(jsonElement.toString());
-        } catch (IOException e) {
-            System.err.println("Error fitxategia irakurtzen: " + e.getMessage());
-        }
-    }
-
-    // --- Utiles de consola / validación ---
-    public static boolean isNumeric(String cadenaString) {
-        try {
-            Integer.parseInt(cadenaString);
-            return true;
-        } catch (NumberFormatException exception) {
-            return false;
-        }
-    }
-
-    private static void kontsolaGarbitu() {
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
-    }
 
     private static void pausa() {
         System.out.print("\nSakatu Enter jarraitzeko...");
         aukera.nextLine();
-    }
-
-    private static void pausaLaburra() {
-        try { Thread.sleep(1500); } catch (InterruptedException ignored) {}
     }
 }
