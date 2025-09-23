@@ -22,19 +22,19 @@ public class DatuakIrakurri {
                 switch (sarrera) {
                     case "1":
                         kontsolaGarbitu();
-                        // TXT IRAKURTZEKO METODOA
+                        //* TXT IRAKURTZEKO METODOA
                         txtFitxategiakKudeatu();
                         break;
                     case "2":
                         kontsolaGarbitu();
-                        // XML IRAKURTZEKO METODOA
+                        //* XML IRAKURTZEKO METODOA
                     case "3":
                         kontsolaGarbitu();
-                        // JSON IRAKURTZEKO METODOA
+                        //* JSON IRAKURTZEKO METODOA
                     case "4":
                         kontsolaGarbitu();
                         System.out.print(Koloreak.Gorria + "Aplikazioatik urtetan." + Koloreak.RESET);
-                        System.exit(0); // Esto cierra el programa inmediatamente
+                        System.exit(0); //* Honek programa bereala itxiko du
 
                     default:
                         kontsolaGarbitu();
@@ -95,7 +95,7 @@ public class DatuakIrakurri {
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-                        main(new String[0]); // Esto cierra el programa inmediatamente
+                        main(new String[0]);
                         break;
                     default:
                         kontsolaGarbitu();
@@ -124,7 +124,7 @@ public class DatuakIrakurri {
     public static void txtIrakurri(String path) {
         try {
             File txtFiles = new File(path);
-            // scanner bitartez fitxategia irakurriko da lerroz lerro
+            // scanner bitartez lerroz lerro fitxategia irakurriko da
             Scanner lector = new Scanner(txtFiles);
             while (lector.hasNextLine()) {
                 String linea = lector.nextLine();
@@ -138,7 +138,7 @@ public class DatuakIrakurri {
     }
 
     public static void txtIdatziCSV(String txtPath, String csvPath) {
-        String delimiter = ";"; // Separador en el TXT (tab, espacio, etc.)
+        String delimiter = ";"; // Separador en el TXT (tab, espacio, etc. --> ; en nuestro caso)
         try (Scanner sc = new Scanner(new File(txtPath));
                 FileWriter fw = new FileWriter(csvPath)) {
             // CSV-rako lehen lerroa idatzi, goiburu gisa
@@ -166,10 +166,8 @@ public class DatuakIrakurri {
     }
 
     public static boolean isNumeric(String cadenaString) {
-        // String[] cadena = cadenaString.split("/");
         try {
             Integer.parseInt(cadenaString);
-            // Integer.parseInt(cadena[1]);
             return true;
         } catch (NumberFormatException exception) {
             return false;
