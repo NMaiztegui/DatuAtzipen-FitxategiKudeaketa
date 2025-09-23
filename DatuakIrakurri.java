@@ -41,6 +41,16 @@ public class DatuakIrakurri{
                         System.out.flush();
                         // XML IRAKURTZEKO METODOA
                         xmlGorde();
+                        Scanner sc = new Scanner(System.in);
+                        System.out.println("Csv-ra pasatu nahi duzu? (Bai/Ez)");
+                        String erantzuna = sc.nextLine();
+                        if (erantzuna.equalsIgnoreCase("Bai")) {
+                            System.out.println("CSV-ra pasatzen...");
+                            xmlIdatziCSV("Helbidea.xml", "Helbidea.csv");
+                        } else {
+                            System.out.println("Ez da CSV-ra pasatuko.");
+                        }
+
                         break;
                     case "3":
                         System.out.print("\033[H\033[2J");
@@ -50,6 +60,7 @@ public class DatuakIrakurri{
                     case "4":
                         System.out.print("Aplikazioatik urtetan.");
                         // Aplikazioa itxi
+                        xmlIdatziCSV("Helbidea.xml", "Helbidea.csv");
                         break;
                     default:
                         break;
@@ -108,5 +119,53 @@ public class DatuakIrakurri{
     } catch (Exception e) {
         e.printStackTrace();
     }
+    
     }
+
+    public static void xmlIdatziCSV(String xmlPath, String csvPath) {
+    try {
+        // Fitxategia kargatu
+        File fitxategia = new File(xmlPath);
+
+        // XML parser sortu
+        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+        Document doc = dBuilder.parse(fitxategia);
+
+        // Normalizatu dokumentua
+        doc.getDocumentElement().normalize();
+
+        // Pertsonen zerrenda hartu
+        NodeList nList = doc.getElementsByTagName("pertsona");
+
+        // CSV fitxategia sortu
+        try (FileWriter fw = new FileWriter(csvPath)) {
+            // Lehenengo lerroa (goiburuak)
+            fw.write("NAN;Helbidea\n");
+
+            // Pertsona bakoitza irakurri eta CSVan idatzi
+            for (int i = 0; i < nList.getLength(); i++) {
+                Node nodo = nList.item(i);
+
+                if (nodo.getNodeType() == Node.ELEMENT_NODE) {
+                    Element element = (Element) nodo;
+
+                    String nan = element.getElementsByTagName("NAN").item(0).getTextContent();
+                    String helbidea = element.getElementsByTagName("helbidea").item(0).getTextContent();
+
+                    // CSV fitxategira idatzi
+                    fw.write(nan + ";" + helbidea + "\n");
+                }
+            }
+        }
+
+
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
+
+
+
+
 }
