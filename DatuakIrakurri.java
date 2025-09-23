@@ -20,15 +20,9 @@ import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import java.io.IOException;
 
 public class DatuakIrakurri {
     public static Scanner aukera = new Scanner(System.in);
@@ -463,7 +457,7 @@ public class DatuakIrakurri {
                         String helbidea = element.getElementsByTagName("helbidea").item(0).getTextContent();
 
                         // CSV fitxategira idatzi
-                        fw.write(nan + ";" + helbidea + "\n");
+                        fw.write(nan + "," + helbidea + "\n");
                     }
                 }
             }
