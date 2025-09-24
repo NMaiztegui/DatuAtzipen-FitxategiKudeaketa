@@ -40,8 +40,7 @@ public class DatuakIrakurri{
                         System.out.print("\033[H\033[2J");
                         System.out.flush();
                         // XML IRAKURTZEKO METODOA
-                        xmlGorde();
-                        Scanner sc = new Scanner(System.in);
+                        xmlGorde();                     Scanner sc = new Scanner(System.in);
                         System.out.println("Csv-ra pasatu nahi duzu? (Bai/Ez)");
                         String erantzuna = sc.nextLine();
                         if (erantzuna.equalsIgnoreCase("Bai")) {
@@ -81,12 +80,12 @@ public class DatuakIrakurri{
         }
     }
 
-    public static void xmlGorde (){
-        // XML gordetzeko metodoa
-        try {
+    public static void xmlGorde() {
+    // XML gordetzeko metodoa
+    try {
         // Fitxategia kargatu
         File fitxategia = new File("Helbidea.xml");
-        
+
         // XML parser sortu
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -107,10 +106,16 @@ public class DatuakIrakurri{
                 Element element = (Element) nodo;
 
                 String nan = element.getElementsByTagName("NAN").item(0).getTextContent();
-                String helbidea = element.getElementsByTagName("helbidea").item(0).getTextContent();
+                String izena = element.getElementsByTagName("Izena").item(0).getTextContent();
+                String abizena = element.getElementsByTagName("Abizena").item(0).getTextContent();
+                String adina = element.getElementsByTagName("Adina").item(0).getTextContent();
+                String helbidea = element.getElementsByTagName("Helbidea").item(0).getTextContent();
 
-                System.out.println("------ Pertsona " + (i+1) + " ------");
+                System.out.println("------ Pertsona " + (i + 1) + " ------");
                 System.out.println("NAN: " + nan);
+                System.out.println("Izena: " + izena);
+                System.out.println("Abizena: " + abizena);
+                System.out.println("Adina: " + adina);
                 System.out.println("Helbidea: " + helbidea);
             }
         }
@@ -118,10 +123,9 @@ public class DatuakIrakurri{
     } catch (Exception e) {
         e.printStackTrace();
     }
-    
-    }
+}
 
-    public static void xmlIdatziCSV(String xmlPath, String csvPath) {
+public static void xmlIdatziCSV(String xmlPath, String csvPath) {
     try {
         // Fitxategia kargatu
         File fitxategia = new File(xmlPath);
@@ -140,7 +144,7 @@ public class DatuakIrakurri{
         // CSV fitxategia sortu
         try (FileWriter fw = new FileWriter(csvPath)) {
             // Lehenengo lerroa (goiburuak)
-            fw.write("NAN;Helbidea\n");
+            fw.write("NAN;Izena;Abizena;Adina;Helbidea\n");
 
             // Pertsona bakoitza irakurri eta CSVan idatzi
             for (int i = 0; i < nList.getLength(); i++) {
@@ -150,21 +154,20 @@ public class DatuakIrakurri{
                     Element element = (Element) nodo;
 
                     String nan = element.getElementsByTagName("NAN").item(0).getTextContent();
-                    String helbidea = element.getElementsByTagName("helbidea").item(0).getTextContent();
+                    String izena = element.getElementsByTagName("Izena").item(0).getTextContent();
+                    String abizena = element.getElementsByTagName("Abizena").item(0).getTextContent();
+                    String adina = element.getElementsByTagName("Adina").item(0).getTextContent();
+                    String helbidea = element.getElementsByTagName("Helbidea").item(0).getTextContent();
 
                     // CSV fitxategira idatzi
-                    fw.write(nan + ";" + helbidea + "\n");
+                    fw.write(nan + ";" + izena + ";" + abizena + ";" + adina + ";" + helbidea + "\n");
                 }
             }
         }
-
 
     } catch (Exception e) {
         e.printStackTrace();
     }
 }
-
-
-
 
 }
