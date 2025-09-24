@@ -60,7 +60,6 @@ public class DatuakIrakurri{
                     case "4":
                         System.out.print("Aplikazioatik urtetan.");
                         // Aplikazioa itxi
-                        xmlIdatziCSV("Helbidea.xml", "Helbidea.csv");
                         break;
                     default:
                         break;
