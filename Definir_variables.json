@@ -2,16 +2,22 @@
     {
         "NAN": "11111111A",
         "Izena": "Danel",
-        "Abizena": "Carril"
+        "Abizena": "Carril",
+        "Adina" : "20",
+        "Helbidea" : "Otaola Hiribidea, 5"
     },
     {
         "NAN": "22222222B",
         "Izena": "Iker",
-        "Abizena": "Egaña"
+        "Abizena": "Egaña",
+        "Adina" : "22",
+        "Helbidea" : "Otaola Hiribidea, 9"
     },
     {
         "NAN": "33333333C",
         "Izena": "Iker",
-        "Abizena": "Sanz"
+        "Abizena": "Sanz",
+        "Adina" : "19",
+        "Helbidea" : "Otaola Hiribidea, 1"
     }
 ]
